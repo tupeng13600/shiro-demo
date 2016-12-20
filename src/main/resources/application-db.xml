@@ -12,6 +12,7 @@
 
     <context:property-placeholder location="classpath:db.properties" file-encoding="UTF-8" local-override="true"/>
 
+    <!-- JDBC数据源配置，此处使用c3p0实现  -->
     <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
         <property name="driverClass" value="${mysql.driverClass}" />
         <property name="jdbcUrl" value="${mysql.url}" />
@@ -32,7 +33,7 @@
         <property name="dataSource" ref="dataSource"/>
         <property name="mapperLocations">
             <list>
-                <value>classpath:/mapper/*.xml</value>
+                <value>classpath:/mapper/*.xml</value>  <!-- 扫描根目录下的mapper文件夹下的所有xml文件  -->
             </list>
         </property>
     </bean>
@@ -43,10 +44,12 @@
         <property name="basePackage" value="com.tp.shiro.mapper"/>
     </bean>
 
+    <!-- 事务  -->
     <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
         <property name="dataSource" ref="dataSource"/>
     </bean>
 
+    <!-- 开启事务注解  -->
     <tx:annotation-driven transaction-manager="transactionManager"/>
 
 </beans>

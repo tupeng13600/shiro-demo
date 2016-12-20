@@ -8,12 +8,16 @@
        http://www.springframework.org/schema/context
        http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
+    <!-- 开启 spring 注解  -->
     <mvc:annotation-driven/>
+
+    <!-- 扫描所有com.tp.shiro 下的class文件，去除（@RestController, @Controller） -->
     <context:component-scan base-package="com.tp.shiro">
         <context:exclude-filter type="annotation" expression="org.springframework.web.bind.annotation.RestController" />
         <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller" />
     </context:component-scan>
 
+    <!-- 引入数据库配置文件  -->
     <import resource="classpath:application-db.xml"/>
 
 </beans>
