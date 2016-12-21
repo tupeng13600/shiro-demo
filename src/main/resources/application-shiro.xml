@@ -13,6 +13,8 @@
         </property>
         <property name="filterChainDefinitions">
             <value>
+                /user/register = anon
+                /user/login = anon
                /** = auth
             </value>
         </property>
