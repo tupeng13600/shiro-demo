@@ -11,32 +11,39 @@ public class RespModel {
 
     private Object data;
 
-    public RespModel(boolean status, String description) {
+    public RespModel(Boolean status) {
         this.status = status;
-        this.description = description;
+        if (status) {
+            this.description = "请求成功";
+        } else {
+            this.description = "请求失败";
+        }
     }
 
     public boolean isStatus() {
         return status;
     }
 
-    public void setStatus(boolean status) {
+    public RespModel setStatus(boolean status) {
         this.status = status;
+        return this;
     }
 
     public String getDescription() {
         return description;
     }
 
-    public void setDescription(String description) {
+    public RespModel setDescription(String description) {
         this.description = description;
+        return this;
     }
 
     public Object getData() {
         return data;
     }
 
-    public void setData(Object data) {
+    public RespModel setData(Object data) {
         this.data = data;
+        return this;
     }
 }

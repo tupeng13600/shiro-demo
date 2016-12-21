@@ -21,7 +21,7 @@ public class ResponseHandler implements ResponseBodyAdvice<Object> {
         if (body instanceof RespModel || !mediaType.includes(MediaType.APPLICATION_JSON)) {
             return body;
         }
-        RespModel respModel = new RespModel(true, "请求成功");
+        RespModel respModel = new RespModel(true);
         respModel.setData(body);
         return respModel;
     }

@@ -20,9 +20,16 @@ public class DemoExceptionHandler {
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ResponseBody
-    public RespModel exception(Exception e) {
+    public RespModel all(Exception e) {
         logger.debug("Exception:", e);
-        return new RespModel(false, "系统错误");
+        return new RespModel(false).setData("系统错误，请联系相关管理人员");
+    }
+
+    @ExceptionHandler(DemoException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ResponseBody
+    public RespModel demo(DemoException e) {
+        return new RespModel(false).setData(e.getMessage());
     }
 
 }
