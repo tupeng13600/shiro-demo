@@ -35,6 +35,7 @@ public class DemoRealm extends AuthorizingRealm {
         User user = userMapper.getByUsername(token.getUsername());
         if (null == user) {
             logger.error("登录失败，用户不存在!!");
+            throw new UnknownAccountException("用户不存在");
         }
         return new SimpleAuthenticationInfo(token.getPrincipal(), user.getPassword(), new SimpleByteSource(user.getSalt()), getName());
     }
