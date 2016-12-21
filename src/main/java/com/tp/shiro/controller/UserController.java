@@ -1,17 +1,10 @@
 package com.tp.shiro.controller;
 
-import com.tp.shiro.bean.User;
+import com.tp.shiro.controller.model.UserModel;
 import com.tp.shiro.service.UserService;
 import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.UsernamePasswordToken;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * Created by Tupeng <tupeng@gengee.cn>
@@ -23,11 +16,19 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/login")
-    public Map<String, Object> login(String username, String password) {
-        UsernamePasswordToken token = new UsernamePasswordToken(username, password);
-        SecurityUtils.getSubject().login(token);
-        return new HashMap<String, Object>();
+    @PutMapping("/login")
+    public void login(@RequestBody UserModel userModel) {
+        userService.login(userModel);
+    }
+
+    @PostMapping("/register")
+    public void registration(@RequestBody UserModel userModel) {
+        userService.register(userModel);
+    }
+
+    @GetMapping("/info")
+    private String getCurrentUser() {
+        return SecurityUtils.getSubject().getPrincipal().toString();
     }
 
 }

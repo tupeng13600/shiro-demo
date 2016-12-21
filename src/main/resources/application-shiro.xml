@@ -13,7 +13,11 @@
         </property>
     </bean>
 
-    <bean id="demoRealm" class="com.tp.shiro.auth.DemoRealm" />
+    <bean id="credentialsMatcher" class="com.tp.shiro.auth.DemoCredentialsMatcher" />
+
+    <bean id="demoRealm" class="com.tp.shiro.auth.DemoRealm">
+        <property name="credentialsMatcher" ref="credentialsMatcher" />
+    </bean>
 
     <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
         <property name="realm" ref="demoRealm"/>

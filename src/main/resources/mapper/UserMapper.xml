@@ -2,8 +2,21 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.tp.shiro.mapper.UserMapper" >
 
-    <select id="getAllUser" resultType="com.tp.shiro.bean.User">
-      SELECT id, username, password, salt, create_time createTime, update_time updateTime FROM user;
+    <insert id="create" parameterType="com.tp.shiro.bean.User">
+      INSERT INTO  user(id, username, password, salt, create_time, update_time)
+            VALUES (#{id},#{username},#{password},#{salt},#{createTime},#{updateTime});
+    </insert>
+
+    <select id="getByUsername" resultType="com.tp.shiro.bean.User">
+        SELECT
+        id,
+        username,
+        password,
+        salt,
+        create_time createTime,
+        update_time updateTime
+        FROM user
+        WHERE username = #{username};
     </select>
 
 </mapper>
