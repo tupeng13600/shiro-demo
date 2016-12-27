@@ -1,5 +1,6 @@
 package com.tp.shiro.controller;
 
+import com.tp.shiro.auth.DemoPrincipal;
 import com.tp.shiro.controller.model.UserModel;
 import com.tp.shiro.service.UserService;
 import org.apache.shiro.SecurityUtils;
@@ -28,7 +29,8 @@ public class UserController {
 
     @GetMapping("/info")
     private String getCurrentUser() {
-        return SecurityUtils.getSubject().getPrincipal().toString();
+        DemoPrincipal principal = (DemoPrincipal) SecurityUtils.getSubject().getPrincipal();
+        return principal.toString();
     }
 
 }

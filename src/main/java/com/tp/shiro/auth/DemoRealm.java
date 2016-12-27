@@ -31,13 +31,13 @@ public class DemoRealm extends AuthorizingRealm {
      */
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
-        DemoToken token = (DemoToken) authenticationToken;
-        User user = userMapper.getByUsername(token.getUsername());
+        DemoPrincipal principal = (DemoPrincipal) authenticationToken.getPrincipal();
+        User user = userMapper.getByUsername(principal.getUsername());
         if (null == user) {
             logger.error("登录失败，用户不存在!!");
             throw new UnknownAccountException("用户不存在");
         }
-        return new SimpleAuthenticationInfo(token.getPrincipal(), user.getPassword(), new SimpleByteSource(user.getSalt()), getName());
+        return new SimpleAuthenticationInfo(principal, user.getPassword(), new SimpleByteSource(user.getSalt()), getName());
     }
 
     /**

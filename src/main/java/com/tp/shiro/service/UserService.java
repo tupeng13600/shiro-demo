@@ -1,5 +1,6 @@
 package com.tp.shiro.service;
 
+import com.tp.shiro.auth.DemoPrincipal;
 import com.tp.shiro.auth.DemoToken;
 import com.tp.shiro.bean.User;
 import com.tp.shiro.controller.model.UserModel;
@@ -31,7 +32,11 @@ public class UserService {
     }
 
     public void login(UserModel model) {
-        SecurityUtils.getSubject().login(new DemoToken(model.getUsername(), model.getPassword()));
+        User user = userMapper.getByUsername(model.getUsername());
+        if(null == user) {
+            throw new DemoException("用户不存在");
+        }
+        SecurityUtils.getSubject().login(new DemoToken(new DemoPrincipal(user.getId(), user.getUsername()), model.getPassword()));
     }
 
     public void register(UserModel userModel) {
