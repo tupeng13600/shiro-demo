@@ -37,7 +37,7 @@ public class DemoExceptionHandler {
 
 
     @ExceptionHandler(ShiroException.class)
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
     @ResponseBody
     public RespModel authentication(ShiroException e) {
         logger.debug("Exception:", e);

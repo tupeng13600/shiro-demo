@@ -1,25 +1,34 @@
 package com.tp.shiro.auth;
 
-import org.apache.shiro.authc.AuthenticationToken;
-import org.apache.shiro.web.filter.authc.AuthenticatingFilter;
+import com.google.gson.Gson;
+import com.tp.shiro.common.RespModel;
+import org.apache.shiro.web.filter.authc.BasicHttpAuthenticationFilter;
+import org.springframework.http.MediaType;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * Created by Tupeng <tupeng@gengee.cn>
  */
-public class DemoFilter extends AuthenticatingFilter {
+public class DemoFilter extends BasicHttpAuthenticationFilter {
 
-    @Override
-    protected AuthenticationToken createToken(ServletRequest request, ServletResponse response) throws Exception {
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-        return new DemoToken(username, password);
-    }
-
+    /**
+     * 重写请求被拒绝时的处理方式
+     * @param request
+     * @param response
+     * @return
+     * @throws Exception
+     */
     @Override
     protected boolean onAccessDenied(ServletRequest request, ServletResponse response) throws Exception {
-        return false;
+        HttpServletResponse httpResponse = (HttpServletResponse) response;
+        RespModel respModel = new RespModel(false);
+        respModel.setData("未授权，或授权失败");
+        String json = new Gson().toJson(respModel);
+        httpResponse.setContentType(MediaType.APPLICATION_JSON_VALUE);
+        httpResponse.getWriter().write(json);
+        return super.onAccessDenied(request,response);
     }
 }
