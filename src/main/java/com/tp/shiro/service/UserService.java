@@ -13,6 +13,7 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.util.SimpleByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 
@@ -31,6 +32,7 @@ public class UserService {
         return userMapper.getByUsername(username);
     }
 
+    @Transactional
     public void login(UserModel model) {
         User user = userMapper.getByUsername(model.getUsername());
         if(null == user) {
@@ -39,6 +41,7 @@ public class UserService {
         SecurityUtils.getSubject().login(new DemoToken(new DemoPrincipal(user.getId(), user.getUsername()), model.getPassword()));
     }
 
+    @Transactional
     public void register(UserModel userModel) {
         User user = getByUsername(userModel.getUsername());
         if (null != user) {
