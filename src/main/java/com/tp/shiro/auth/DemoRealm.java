@@ -1,7 +1,7 @@
 package com.tp.shiro.auth;
 
 import com.tp.shiro.bean.User;
-import com.tp.shiro.mapper.UserMapper;
+import com.tp.shiro.service.UserService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.shiro.authc.*;
@@ -18,7 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class DemoRealm extends AuthorizingRealm {
 
     @Autowired
-    private UserMapper userMapper;
+    private UserService userService;
 
     private Logger logger = LogManager.getLogger(this.getClass());
 
@@ -32,7 +32,7 @@ public class DemoRealm extends AuthorizingRealm {
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
         DemoPrincipal principal = (DemoPrincipal) authenticationToken.getPrincipal();
-        User user = userMapper.getByUsername(principal.getUsername());
+        User user = userService.getByUsername(principal.getUsername());
         if (null == user) {
             logger.error("登录失败，用户不存在!!");
             throw new UnknownAccountException("用户不存在");

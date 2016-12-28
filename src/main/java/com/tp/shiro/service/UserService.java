@@ -3,9 +3,11 @@ package com.tp.shiro.service;
 import com.tp.shiro.auth.DemoPrincipal;
 import com.tp.shiro.auth.DemoToken;
 import com.tp.shiro.bean.User;
+import com.tp.shiro.bean.UserLoginInfo;
 import com.tp.shiro.controller.model.UserModel;
 import com.tp.shiro.exception.DemoException;
 import com.tp.shiro.mapper.UserMapper;
+import com.tp.shiro.mongo.MongoOperation;
 import com.tp.shiro.util.SecurityUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -16,12 +18,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by Tupeng <tupeng@gengee.cn>
  */
 @Service
-public class UserService {
+public class UserService extends MongoOperation<UserLoginInfo> {
 
     private Logger logger = LogManager.getLogger(this.getClass());
 
@@ -35,9 +38,11 @@ public class UserService {
     @Transactional
     public void login(UserModel model) {
         User user = userMapper.getByUsername(model.getUsername());
-        if(null == user) {
+        if (null == user) {
             throw new DemoException("用户不存在");
         }
+        //使用mongodb记录日志:仅仅是为了测试mongodb的使用
+        super.save(new UserLoginInfo(user.getId(), user.getUsername(), new Date()));
         SecurityUtils.getSubject().login(new DemoToken(new DemoPrincipal(user.getId(), user.getUsername()), model.getPassword()));
     }
 
@@ -56,5 +61,15 @@ public class UserService {
         user.setUpdateTime(new Date());
         userMapper.create(user);
     }
+
+    /**
+     * 获取登录日志
+     *
+     * @return
+     */
+    public List<UserLoginInfo> getAllLogs() {
+        return super.listAll(UserLoginInfo.class);
+    }
+
 
 }

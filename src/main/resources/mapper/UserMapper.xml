@@ -19,4 +19,16 @@
         WHERE username = #{username};
     </select>
 
+    <select id="getById" resultType="com.tp.shiro.bean.User">
+        SELECT
+        id,
+        username,
+        password,
+        salt,
+        create_time createTime,
+        update_time updateTime
+        FROM user
+        WHERE username = #{id};
+    </select>
+
 </mapper>
