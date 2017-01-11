@@ -8,18 +8,12 @@
        http://www.springframework.org/schema/context
        http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
-    <!-- 开启 spring 注解  -->
-    <mvc:annotation-driven/>
-
     <!-- 扫描所有com.tp.shiro 下的class文件，去除（@RestController, @Controller） -->
-    <context:component-scan base-package="com.tp.shiro" />
-    <!-- mysql  -->
-    <import resource="classpath:application-db.xml"/>
-    <!-- shiro  -->
-    <import resource="application-shiro.xml" />
-    <!-- mongodb  -->
-    <import resource="application-mongo.xml" />
-    <!-- swagger  -->
-    <import resource="application-swagger.xml" />
+    <context:component-scan base-package="springfox" />
 
+    <bean id="swagger2Config" class="springfox.documentation.swagger2.configuration.Swagger2DocumentationConfiguration"/>
+
+    <bean id="docket" class="com.tp.shiro.swagger.DemoDocket">
+        <constructor-arg name="documentationType" value="SWAGGER_2"/>
+    </bean>
 </beans>

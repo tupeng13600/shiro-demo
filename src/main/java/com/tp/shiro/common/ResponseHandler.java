@@ -18,11 +18,12 @@ public class ResponseHandler implements ResponseBodyAdvice<Object> {
     }
 
     public Object beforeBodyWrite(Object body, MethodParameter methodParameter, MediaType mediaType, Class aClass, ServerHttpRequest serverHttpRequest, ServerHttpResponse serverHttpResponse) {
-        if (body instanceof RespModel || !mediaType.includes(MediaType.APPLICATION_JSON)) {
+        if (body instanceof RespModel || !mediaType.includes(MediaType.APPLICATION_JSON)
+                || methodParameter.getMethodAnnotation(DemoResponse.class) == null) {
             return body;
         }
         RespModel respModel = new RespModel(true);
         respModel.setData(body);
-        return respModel;
+        return body;
     }
 }

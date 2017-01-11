@@ -15,7 +15,7 @@
             <value>
                 /user/register = anon
                 /user/login = anon
-                /** = auth
+                /** = anon
             </value>
         </property>
     </bean>
