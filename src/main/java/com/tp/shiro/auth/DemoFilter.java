@@ -14,6 +14,11 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class DemoFilter extends BasicHttpAuthenticationFilter {
 
+    @Override
+    protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) {
+        return super.isAccessAllowed(request, response, mappedValue);
+    }
+
     /**
      * 重写请求被拒绝时的处理方式
      * @param request

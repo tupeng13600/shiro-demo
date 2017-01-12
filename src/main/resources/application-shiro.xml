@@ -15,7 +15,13 @@
             <value>
                 /user/register = anon
                 /user/login = anon
-                /** = anon
+                /configuration/** = anon
+                /swagger-resources = anon
+                /v2/** = anon
+                /webjars/** = anon
+                /.* = anon
+                / = anon
+                /** = auth
             </value>
         </property>
     </bean>
