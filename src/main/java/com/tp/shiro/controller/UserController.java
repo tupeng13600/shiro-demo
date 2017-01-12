@@ -42,9 +42,8 @@ public class UserController {
     @ApiOperation(value = "用户信息", notes = "获取当前用户信息", httpMethod = "GET", produces = MediaType.APPLICATION_JSON_VALUE)
     @GetMapping("/info")
     @DemoResponse
-    private String getCurrentUser() {
-        DemoPrincipal principal = (DemoPrincipal) SecurityUtils.getSubject().getPrincipal();
-        return principal.toString();
+    private DemoPrincipal getCurrentUser() {
+        return  (DemoPrincipal) SecurityUtils.getSubject().getPrincipal();
     }
 
     @ApiOperation(value = "日志", notes = "查看用户登录日志", httpMethod = "GET", produces = MediaType.APPLICATION_JSON_VALUE)

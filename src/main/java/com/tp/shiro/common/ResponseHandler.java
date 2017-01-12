@@ -24,6 +24,6 @@ public class ResponseHandler implements ResponseBodyAdvice<Object> {
         }
         RespModel respModel = new RespModel(true);
         respModel.setData(body);
-        return body;
+        return respModel;
     }
 }
