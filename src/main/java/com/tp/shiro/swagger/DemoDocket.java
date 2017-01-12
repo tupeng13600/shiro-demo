@@ -18,9 +18,9 @@ public class DemoDocket extends Docket {
         init();
     }
 
-    public void init() {
+    private void init() {
         this.select()
-                .apis(RequestHandlerSelectors.basePackage("io.swagger.api"))
+                .apis(RequestHandlerSelectors.basePackage("com.tp.shiro.controller"))
                 .build()
                 .directModelSubstitute(org.joda.time.LocalDate.class, java.sql.Date.class)
                 .directModelSubstitute(org.joda.time.DateTime.class, java.util.Date.class)
@@ -29,13 +29,13 @@ public class DemoDocket extends Docket {
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("Swagger Petstore")
-                .description("This spec is mainly for testing Petstore server and contains fake endpoints, models. Please do not use this for any other purpose. Special characters: \" \\")
+                .title("shiro-demo API Center")
+                .description("这是一个demo的API展示")
                 .license("Apache 2.0")
                 .licenseUrl("http://www.apache.org/licenses/LICENSE-2.0.html")
                 .termsOfServiceUrl("")
                 .version("1.0.0")
-                .contact(new Contact("", "", "apiteam@swagger.io"))
+                .contact(new Contact("涂鹏", "http://blog.csdn.net/u010199513", "2267026134@qq.com"))
                 .build();
     }
 }

@@ -32,12 +32,14 @@ public class UserController {
         userService.login(userModel);
     }
 
+    @ApiOperation(value = "注册", notes = "注册成为系统用户", httpMethod = "POST", produces = MediaType.APPLICATION_JSON_VALUE)
     @PostMapping("/register")
     @DemoResponse
     public void registration(@RequestBody UserModel userModel) {
         userService.register(userModel);
     }
 
+    @ApiOperation(value = "用户信息", notes = "获取当前用户信息", httpMethod = "GET", produces = MediaType.APPLICATION_JSON_VALUE)
     @GetMapping("/info")
     @DemoResponse
     private String getCurrentUser() {
@@ -45,6 +47,7 @@ public class UserController {
         return principal.toString();
     }
 
+    @ApiOperation(value = "日志", notes = "查看用户登录日志", httpMethod = "GET", produces = MediaType.APPLICATION_JSON_VALUE)
     @GetMapping("/logs")
     @DemoResponse
     private List<UserLoginInfo> getUserLogs() {
