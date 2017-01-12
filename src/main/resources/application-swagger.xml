@@ -11,9 +11,10 @@
     <!-- 扫描所有com.tp.shiro 下的class文件，去除（@RestController, @Controller） -->
     <context:component-scan base-package="springfox" />
 
-    <bean id="swagger2Config" class="springfox.documentation.swagger2.configuration.Swagger2DocumentationConfiguration"/>
-
     <bean id="docket" class="com.tp.shiro.swagger.DemoDocket">
         <constructor-arg name="documentationType" value="SWAGGER_2"/>
     </bean>
+
+    <bean id="swagger2Config" class="springfox.documentation.swagger2.configuration.Swagger2DocumentationConfiguration"/>
+
 </beans>

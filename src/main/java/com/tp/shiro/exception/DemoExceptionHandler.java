@@ -23,7 +23,7 @@ public class DemoExceptionHandler {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ResponseBody
     public RespModel all(Exception e) {
-        logger.debug("Exception:", e);
+        logger.error("Exception:", e);
         return new RespModel(false).setData("系统错误，请联系相关管理人员");
     }
 
@@ -31,7 +31,7 @@ public class DemoExceptionHandler {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ResponseBody
     public RespModel requestTypeError(HttpRequestMethodNotSupportedException e) {
-        logger.debug("Exception:", e);
+        logger.error("Exception:", e);
         return new RespModel(false).setData("请求方式错误");
     }
 
@@ -40,7 +40,7 @@ public class DemoExceptionHandler {
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     @ResponseBody
     public RespModel authentication(ShiroException e) {
-        logger.debug("Exception:", e);
+        logger.error("Exception:", e);
         return new RespModel(false).setData("未授权或授权失败");
     }
 

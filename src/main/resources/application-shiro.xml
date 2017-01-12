@@ -19,7 +19,7 @@
                 /swagger-resources = anon
                 /v2/** = anon
                 /webjars/** = anon
-                /.* = anon
+                /*.* = anon
                 / = anon
                 /** = auth
             </value>
