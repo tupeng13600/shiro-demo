@@ -36,4 +36,5 @@ public class DemoFilter extends BasicHttpAuthenticationFilter {
         httpResponse.getWriter().write(json);
         return super.onAccessDenied(request,response);
     }
+
 }

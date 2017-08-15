@@ -24,7 +24,7 @@ import java.util.List;
  * Created by Tupeng <tupeng@gengee.cn>
  */
 @Service
-public class UserService extends MongoOperation<UserLoginInfo> {
+public class UserService {
 
     private Logger logger = LogManager.getLogger(this.getClass());
 
@@ -42,7 +42,7 @@ public class UserService extends MongoOperation<UserLoginInfo> {
             throw new DemoException("用户不存在");
         }
         //使用mongodb记录日志:仅仅是为了测试mongodb的使用
-        super.save(new UserLoginInfo(user.getId(), user.getUsername(), new Date()));
+//        super.save(new UserLoginInfo(user.getId(), user.getUsername(), new Date()));
         SecurityUtils.getSubject().login(new DemoToken(new DemoPrincipal(user.getId(), user.getUsername()), model.getPassword()));
     }
 
@@ -68,7 +68,8 @@ public class UserService extends MongoOperation<UserLoginInfo> {
      * @return
      */
     public List<UserLoginInfo> getAllLogs() {
-        return super.listAll(UserLoginInfo.class);
+//        return super.listAll(UserLoginInfo.class);
+        return null;
     }
 
 

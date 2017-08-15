@@ -8,7 +8,7 @@
         <property name="securityManager" ref="securityManager"/>
         <property name="filters">
             <util:map>
-                <entry key="auth" value-ref="demoFilter" />
+                <entry key="auth" value-ref="demoFilter"/>
             </util:map>
         </property>
         <property name="filterChainDefinitions">
@@ -17,6 +17,8 @@
                 /user/login = anon
                 /configuration/** = anon
                 /swagger-resources = anon
+                /swagger =anon
+                /swagger.json = anon
                 /v2/** = anon
                 /webjars/** = anon
                 /*.* = anon
@@ -26,24 +28,48 @@
         </property>
     </bean>
 
-    <bean id="credentialsMatcher" class="com.tp.shiro.auth.DemoCredentialsMatcher" />
+    <bean id="credentialsMatcher" class="com.tp.shiro.auth.DemoCredentialsMatcher"/>
+
+    <bean id="demoCache" class="com.tp.shiro.cache.DemoCache"/>
+
+    <bean id="cacheManager" class="com.tp.shiro.cache.DemoCacheManager">
+        <property name="cache" ref="demoCache"/>
+    </bean>
 
     <bean id="demoRealm" class="com.tp.shiro.auth.DemoRealm">
-        <property name="credentialsMatcher" ref="credentialsMatcher" />
+        <property name="credentialsMatcher" ref="credentialsMatcher"/>
+        <property name="cachingEnabled" value="true"/>
+        <property name="authenticationCachingEnabled" value="true"/>
+        <property name="cacheManager" ref="cacheManager"/>
+    </bean>
+
+    <bean id="authenticator" class="org.apache.shiro.authc.pam.ModularRealmAuthenticator">
+        <property name="authenticationListeners">
+            <list>
+                <bean class="com.tp.shiro.listener.DemoListener" />
+            </list>
+        </property>
+        <property name="realms">
+            <list>
+                <ref bean="demoRealm" />
+            </list>
+        </property>
     </bean>
 
     <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
-        <property name="realm" ref="demoRealm"/>
+        <!--<property name="realm" ref="demoRealm"/>-->
+        <property name="authenticator" ref="authenticator"/>
     </bean>
 
     <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>
 
     <!-- Enable Shiro Annotations for Spring-configured beans.  Only run after -->
-    <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator" depends-on="lifecycleBeanPostProcessor"/>
+    <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"
+          depends-on="lifecycleBeanPostProcessor"/>
     <bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
         <property name="securityManager" ref="securityManager"/>
     </bean>
 
-    <bean id="demoFilter" class="com.tp.shiro.auth.DemoFilter" />
+    <bean id="demoFilter" class="com.tp.shiro.auth.DemoFilter"/>
 
 </beans>

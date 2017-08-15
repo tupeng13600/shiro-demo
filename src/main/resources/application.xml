@@ -18,8 +18,8 @@
     <!-- shiro  -->
     <import resource="application-shiro.xml" />
     <!-- mongodb  -->
-    <import resource="application-mongo.xml" />
+    <!--<import resource="application-mongo.xml" />-->
     <!-- swagger  -->
-    <import resource="application-swagger.xml" />
+    <!--<import resource="application-swagger.xml" />-->
 
 </beans>
